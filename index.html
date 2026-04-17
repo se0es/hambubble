@@ -8351,7 +8351,8 @@
                     // 다운로드 버튼 생성
                     const downloadLink = document.createElement('a');
                     downloadLink.href = msg.content;
-                    downloadLink.download = `kiuook_video_${Date.now()}.mp4`; // 파일명 설정
+                    // 파일명을 'hambubble_파일명'으로 설정
+                    downloadLink.download = `hambubble_${originalFileName}`;
                     downloadLink.className = 'download-btn';
                     downloadLink.textContent = '영상 저장 ⬇️';
 
