@@ -8333,12 +8333,20 @@
                     const img = document.createElement('img');
                     img.src = msg.content;
                     bubbleDiv.appendChild(img);
-                }  else if (msg.type === 'video') {
+                } else if (msg.type === 'video') {
                     bubbleDiv.className = 'bubble photo';
                     
-                    // 비디오와 다운로드 버튼을 묶을 컨테이너
+                    // 1. 영상 경로에서 파일 이름만 안전하게 가져오기
+                    let fileName = "video.mp4"; // 기본값
+                    if (msg.content) {
+                        fileName = msg.content.split('/').pop();
+                    }
+
+                    // 2. 비디오와 버튼을 감싸는 박스 만들기
                     const videoWrapper = document.createElement('div');
                     videoWrapper.className = 'video-wrapper';
+                    videoWrapper.style.display = 'flex';
+                    videoWrapper.style.flexDirection = 'column';
 
                     const video = document.createElement('video');
                     video.src = msg.content;
@@ -8348,14 +8356,18 @@
                     video.style.borderRadius = '10px';
                     video.style.display = 'block';
 
-                    // 다운로드 버튼 생성
+                    // 3. 다운로드 버튼 만들기
                     const downloadLink = document.createElement('a');
                     downloadLink.href = msg.content;
-                    // 파일명을 'hambubble_파일명'으로 설정
-                    downloadLink.download = `hambubble_${originalFileName}`;
+                    downloadLink.download = `hambubble_${fileName}`; 
                     downloadLink.className = 'download-btn';
                     downloadLink.textContent = '영상 저장 ⬇️';
+                    // 스타일이 안 먹었을까봐 직접 추가
+                    downloadLink.style.marginTop = '8px';
+                    downloadLink.style.fontSize = '12px';
+                    downloadLink.style.color = '#555';
 
+                    // 4. 합치기
                     videoWrapper.appendChild(video);
                     videoWrapper.appendChild(downloadLink);
                     bubbleDiv.appendChild(videoWrapper);
